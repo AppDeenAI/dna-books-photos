@@ -1,5 +1,7 @@
 # DNA Lifestyle — Books catalogue for Shopify
 
+**Browse the photos:** https://appdeenai.github.io/dna-books-photos/
+
 Source sheet: `Books _16.9.26_1.xlsx` — 2,179 products (2,063 books, 116 stationery items).
 
 | File | What it is |
@@ -9,6 +11,7 @@ Source sheet: `Books _16.9.26_1.xlsx` — 2,179 products (2,063 books, 116 stati
 | `photos/` | Every product photo, downloaded from its source — `photos/books/<letter>/<handle>-<n>.jpg`, `photos/stationery/<handle>-<n>.jpg` |
 | `photos_manifest.csv` | Photo list: barcode, SKU, title, photo number, source URL, file path |
 | `photos_report.csv` | Download result for every photo (status, file, size) |
+| `index.html`, `gallery_data.json`, `thumbs/` | The GitHub Pages gallery — rebuild with `python scripts/build_site.py` |
 
 ## Photos
 - **Books:** front cover. 1,755 are Amazon's 1500px image for the exact ISBN (verified against Goodreads or by eye); the rest come from Goodreads / Open Library.
