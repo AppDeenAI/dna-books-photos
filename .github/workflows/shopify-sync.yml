@@ -1,0 +1,42 @@
+name: Shopify sync (encrypted hand-off)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - sync/request.json
+
+permissions:
+  contents: write
+
+concurrency:
+  group: shopify-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install cryptography requests
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898299+github-actions[bot]@users.noreply.github.com"
+
+      - name: Publish one-time public key
+        run: python scripts/shopify_sync.py keygen
+
+      - name: Wait for encrypted payload
+        run: python scripts/shopify_sync.py wait
+
+      - name: Upload the update file to Shopify's staged target
+        run: python scripts/shopify_sync.py run
